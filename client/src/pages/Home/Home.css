@@ -1,0 +1,213 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    height: 40px;
+    width: auto;
+    text-align: end;
+    padding: 10px;
+}
+
+.label2 {
+    padding-top: 10px;
+}
+
+.label {
+    color: #053B50;
+    background-color: #053B50;
+    font-size: 17px;
+}
+.label1 {
+    display: flex;
+    align-items: center;
+ 
+}
+
+.label1 div {
+    margin-left: 1px; /* Adjust as necessary for spacing */
+    background-color: white;
+    
+}
+.teend{
+    justify-content: flex-end;
+}
+.biggest {
+    /* Your biggest styles */
+    display: flex;
+    /* Add this to make children side by side */
+    flex-wrap: wrap;
+    /* Add this to allow wrapping */
+    align-items: center;
+}
+
+.bigger {
+    padding-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 29px;
+    grid-row-gap: 0px;
+}
+
+.chintu {
+    height: 350px;
+    width: 600px;
+    border: 2px solid #053B50;
+    border-radius: 10px;
+}
+
+.chintu2 {
+    height: auto;
+    width: 1230px;
+    border: 2px solid #053B50;
+    border-radius: 10px;
+}
+
+.chintu3 {
+    height: 250px;
+    width: 1230px;
+    border: 2px solid #053B50;
+    border-radius: 10px;
+}
+
+.bigger2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    flex-basis: 100%;
+    /* Add this to make it take up full width */
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+
+.headin {
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #053B50;
+    color: #fff;
+}
+
+.apart {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+}
+
+.hu {
+    display: none;
+}
+
+.jadu {
+    padding-top: 50px;
+    display: flex;
+    justify-content: flex-start; /* Changed start to flex-start */
+    align-items: flex-start; /* Changed start to flex-start */
+}
+
+.yoyo {
+    font-size: 20px;
+    padding-left: 30px;
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.gcss1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 50px;
+}
+
+@media screen and (max-width: 1400px) {
+
+    .bigger {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 25px;
+    }
+
+    .bigger2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chintu,
+    .chintu2,
+    .chintu3 {
+        width: 800px;
+        height: 500px;
+    }
+
+    .biggest {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gcss1 {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        padding-top: 40px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+
+    .chintu {
+        width: auto;
+        height: auto;
+    }
+
+    .chintu2, .chintu3 {
+        width: 620px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .apart {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 9px;
+        padding: auto;
+    }
+
+    .chintu2, .chintu3 {
+        width: 310px;
+    }
+
+    .madhi {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 17px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+
+    .chintu,
+    .chintu2 {
+        width: 120;
+        height: auto;
+    }
+
+    .biggest {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
