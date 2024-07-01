@@ -61,7 +61,7 @@ img{
 
 @media screen and (max-width: 500px) {
     .kanda{
-        height: 230px;
+        height: 200px;
         width: 290px;
     }
     .today-flow{
@@ -81,7 +81,7 @@ img{
     }
     .today-flow{
         width: auto;
-        font-size: 50px;
+        font-size: 35px;
     }
 }
 

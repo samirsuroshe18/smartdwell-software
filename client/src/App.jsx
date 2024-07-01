@@ -19,7 +19,7 @@ import { MeterIdProvider } from './contexts/meterId';
 const App = () => {
   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
-  const [meter, setMeter] = useState(0);
+  const [meter, setMeter] = useState(null);
 
   return (
     <MeterIdProvider value={{meter, setMeter}}>

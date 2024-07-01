@@ -12,7 +12,7 @@ function T1data() {
                 width: 200,
                 height: 160,
                 color: '#8bd0ec',
-                level: '10'
+                level: '59'
             })
 
 

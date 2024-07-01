@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import GaugeComponent from 'react-gauge-component';
+import useValvePositionData from '../../hooks/guage/useValvePositionData';
 
 function Gauge2() {
-  const [valvePosition, setValvePosition] = useState(0); // State variable for valve position
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); // Initialize loading state
+  const response = useValvePositionData();
 
   useEffect(() => {
-    // Simulate fetching data with a delay
-    const fetchData = setTimeout(() => {
-      setValvePosition(55); // Set valve position after data fetch
-      setLoading(false); // Set loading to false after data fetch
-    }, 2000); // Simulated 2 second delay
-
-    return () => clearTimeout(fetchData); // Clean up on component unmount
-  }, []);
+    if (response) {
+      setLoading(false); // Set loading to false if response is received
+    }
+  }, [response]);
 
   return (
     <div className='container'>
       <div style={{ height: '260px', width: '260px', position: 'relative' }}>
         <GaugeComponent
-          value={valvePosition}
+          value={response?.controller_current_position || 0}
           type="radial"
           labels={{
             valueLabel: {
@@ -60,15 +57,21 @@ function Gauge2() {
             color: loading ? 'gray' : '#053B50', // Change color during loading
             fontWeight: 'bold',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            justifyContent: 'center', // Center content horizontally
+            width: '100%', // Ensure it spans the width of the container
+            whiteSpace: 'nowrap' // Prevent text wrapping
           }}
         >
-          {/* <span>Position: </span> */}
-          {loading ? <span className="loading">Loading...</span> : <span>Position:{valvePosition}%</span>}
+          {loading ? (
+            <span className="loading">Loading...</span>
+          ) : (
+            <span>Position: {response?.controller_current_position || 0}%</span>
+          )}
         </div>
       </div>
-    </div >
+    </div>
   );
-}
+} 
 
 export default Gauge2;

@@ -16,7 +16,6 @@ function useDaySankey(date){
         .then((response)=> setData(response))
     }, [date])
 
-    console.log("DaySankey Data : ",data);
     return data;
 }
 

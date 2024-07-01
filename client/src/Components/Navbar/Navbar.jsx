@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Navbar.css';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faHome, faSyncAlt, faUser,} from '@fortawesome/free-solid-svg-icons'; // Import the necessary icons
+import { faBars, faSyncAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
 
@@ -58,7 +58,7 @@ const Navbar = () => {
             </div>
             <button
                 className="navbar-toggler"
-                onClick={() => setTimeout(animation, 0)} // Simplified onClick handler
+                onClick={() => setTimeout(animation, 0)}
                 type="button"
                 data-toggle="collapse"
                 data-target="#navbarSupportedContent"
@@ -75,25 +75,22 @@ const Navbar = () => {
                         <div className="right"></div>
                     </div>
                     <li className="nav-item active">
+                        {/* Uncomment and modify the NavLink if needed */}
                         {/* <NavLink className="nav-link" to="/" exact>
-                            <FontAwesomeIcon icon={faArrowUpFromWaterPump} /> Domestic
+                            <FontAwesomeIcon icon={faHome} /> Home
                         </NavLink> */}
                     </li>
                 </ul>
                 <div className="d-flex">
                     <div className="logout p-2">
-                        <ul>
-                            <button type="button" className="btn btn-outline-light" onClick={refreshPage}>
-                                <FontAwesomeIcon icon={faSyncAlt} /> Refresh
-                            </button>
-                        </ul>
+                        <button type="button" className="btn btn-outline-light" onClick={refreshPage}>
+                            <FontAwesomeIcon icon={faSyncAlt} /> Refresh
+                        </button>
                     </div>
                     <div className="logout p-2">
-                        <ul>
-                            <button type="button" className="btn btn-outline-light" onClick={logOut}>
-                                <FontAwesomeIcon icon={faUser} /> Logout
-                            </button>
-                        </ul>
+                        <button type="button" className="btn btn-outline-light" onClick={logOut}>
+                            <FontAwesomeIcon icon={faUser} /> Logout
+                        </button>
                     </div>
                 </div>
             </div>

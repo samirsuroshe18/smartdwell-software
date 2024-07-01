@@ -4,11 +4,12 @@ import useMeterId from "../contexts/meterId";
 const useInstantaneusData = (start_time, end_time) => {
   const [data, setData] = useState(null);
   const {meter} = useMeterId()
+  const meter_id = JSON.parse(localStorage.getItem("userBuilding"));
 
   useEffect(() => {
     const fetchData = async () => {
       // Replace with your actual data fetching logic
-      const response = await fetch(`https://api.nbsense.in/water_ms/analytics/line?meter_id=${meter}&start_time=${start_time}&end_time=${end_time}`,
+      const response = await fetch(`https://api.nbsense.in/water_ms/analytics/line?meter_id=${meter || meter_id}&start_time=${start_time}&end_time=${end_time}`,
         {
           method: 'GET', // or 'POST' if you are posting data
           headers: {
@@ -22,7 +23,7 @@ const useInstantaneusData = (start_time, end_time) => {
     };
 
     fetchData();
-  }, [start_time, end_time]);
+  }, [start_time, end_time, meter, meter_id]);
 
   return data;
 };

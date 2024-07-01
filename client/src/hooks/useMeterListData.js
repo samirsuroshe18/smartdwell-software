@@ -16,7 +16,6 @@ function useMeterListData(){
         .then((response)=> setData(response))
     }, [])
 
-    console.log("MeterList Data : ",data);
     return data;
 }
 
