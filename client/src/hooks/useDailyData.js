@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-
+import useMeterId from "../contexts/meterId";
 
 function useDailyData(date){
     const [data, setData] = useState([]);
+    const {meter} = useMeterId()
+    const meter_id = JSON.parse(localStorage.getItem("userBuilding"));
+    
     useEffect(()=>{
-        fetch(`https://api.nbsense.in/water_ms/bar/${date}?meter_id=337`
+        fetch(`https://api.nbsense.in/water_ms/bar/${date}?meter_id=${meter || meter_id}`
             , {
                 method: 'GET', // or 'POST' if you are posting data
                 headers: {
@@ -14,9 +17,7 @@ function useDailyData(date){
               }
         ).then((response)=>response.json())
         .then((response)=> setData(response))
-    }, [date])
-
-    console.log("Daily : ",data);
+    }, [date, meter, meter_id])
     return data;
 }
 

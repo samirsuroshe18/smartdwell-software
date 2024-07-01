@@ -1,57 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import GaugeComponent from 'react-gauge-component';
+import useValvePositionData from '../../hooks/guage/useValvePositionData';
 
 function Gauge2() {
-  const [valvePosition, setValvePosition] = useState(0); // State variable for valve position
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); // Initialize loading state
+  const response = useValvePositionData();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Get userBuilding from local storage and parse it as an integer
-        const userBuilding = JSON.parse(localStorage.getItem('userBuilding')); // Default to 337 if not found
-        console.log('Retrieved userBuilding:', userBuilding); // Debugging log
-
-        // Replace with your actual API endpoint and token
-        const apiUrl = `https://api.nbsense.in/water_controller/latest_data?meter_id=${userBuilding}`;
-        const token = 'Bearer 475e703f-dc25-4e07-9eb7-db86cd19e6c0';
-        console.log('Constructed API URL:', apiUrl); // Debugging log
-
-        const response = await fetch(apiUrl, {
-          headers: {
-            Authorization: token
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const data = await response.json();
-        console.log('Fetched data:', data); // Debugging log
-
-        // Set valve position from API response
-        setValvePosition(data.controller_current_position);
-        setLoading(false); // Set loading to false after data is fetched
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false); // Set loading to false if there's an error
-      }
-    };
-
-    fetchData();
-
-    // Clean up function to clear timeout or cancel async operations if component unmounts
-    return () => {
-      // Cleanup code if necessary
-    };
-  }, []); // Empty dependency array ensures useEffect runs only once on mount
+    if (response) {
+      setLoading(false); // Set loading to false if response is received
+    }
+  }, [response]);
 
   return (
     <div className='container'>
       <div style={{ height: '260px', width: '260px', position: 'relative' }}>
         <GaugeComponent
-          value={valvePosition}
+          value={response?.controller_current_position || 0}
           type="radial"
           labels={{
             valueLabel: {
@@ -101,12 +66,12 @@ function Gauge2() {
           {loading ? (
             <span className="loading">Loading...</span>
           ) : (
-            <span>Position: {valvePosition}%</span>
+            <span>Position: {response?.controller_current_position || 0}%</span>
           )}
         </div>
       </div>
     </div>
   );
-}
+} 
 
 export default Gauge2;

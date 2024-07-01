@@ -78,7 +78,7 @@ function Home() {
               </div>
             </div>
 
-            <Dropdown title={selectedOption} onSelect={handleSelect}>
+            <Dropdown title={selectedOption} onSelect={handleSelect} className="py-1 px-2 w-8">
               <Dropdown.Item eventKey="Daily" >Daily</Dropdown.Item>
               <Dropdown.Item eventKey="Instantaneous">Instantaneous</Dropdown.Item>
             </Dropdown>

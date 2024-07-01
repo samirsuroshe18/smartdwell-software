@@ -3,8 +3,9 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsExporting from "highcharts/modules/exporting";
 import useDailyData from '../../hooks/useDailyData'
-import DatePicker from "rsuite/DatePicker";
-import "rsuite/DatePicker/styles/index.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useNavigate } from "react-router-dom";
 
 
@@ -105,13 +106,16 @@ const Daily = () => {
           <h2 className="text-2xl font-bold text-gray-800">
             Daily Consumption
           </h2>
-          <DatePicker
-            placement="auto"
-            oneTap
-            value={date}
-            format="yyyy-MM"
-            onChange={handleDateChange}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label={'"Month"'}
+              openTo="month"
+              views={['month']}
+              format="yyyy-MM"
+              value={date}
+              onChange={handleDateChange}
+            />
+          </LocalizationProvider>
         </div>
         <div className="mt-10">
           {isLoading ? (

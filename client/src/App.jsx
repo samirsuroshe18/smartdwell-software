@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
@@ -13,12 +13,17 @@ import Login from './Components/login_component/login_component';
 import SignUp from "./Components/signup_component/signup_component";
 import UserDetails from "./Components/userDetails/userDetails";
 import Analysis from './Components/graphs/Analysis';
+import Overview from './pages/Overview/Overview';
+import { MeterIdProvider } from './contexts/meterId';
 
 const App = () => {
   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
+  const [meter, setMeter] = useState(null);
+
   return (
-    <Router>
+    <MeterIdProvider value={{meter, setMeter}}>
+      <Router>
       
       <main>
         <Routes>
@@ -34,6 +39,7 @@ const App = () => {
               isLoggedIn ? <Home /> : <Navigate to="/sign-up" />
             }
           />
+          <Route path="/overview" element={<Overview />} />
           <Route path="/home/analysis" element={<Analysis />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<Login />} />
@@ -46,6 +52,7 @@ const App = () => {
         </Routes>
       </main>
     </Router>
+    </MeterIdProvider>
   );
 }
 

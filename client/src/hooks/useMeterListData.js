@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import useMeterId from "../contexts/meterId";
 
-function useMontlyData(year=2024){
+
+function useMeterListData(){
     const [data, setData] = useState([]);
-    const {meter} = useMeterId();
-    const meter_id = JSON.parse(localStorage.getItem("userBuilding"));
-    meter ? console.log("Admin user : ", meter) : console.log("Login user : ", meter_id);
-    
     useEffect(()=>{
-        fetch(`https://api.nbsense.in/water_ms/bar/${year}?meter_id=${meter || meter_id}`
+        fetch(`https://api.nbsense.in/water_ms/water_list_data`
             , {
                 method: 'GET', // or 'POST' if you are posting data
                 headers: {
@@ -18,9 +14,9 @@ function useMontlyData(year=2024){
               }
         ).then((response)=>response.json())
         .then((response)=> setData(response))
-    }, [year, meter, meter_id])
+    }, [])
 
     return data;
 }
 
-export default useMontlyData;
+export default useMeterListData;
