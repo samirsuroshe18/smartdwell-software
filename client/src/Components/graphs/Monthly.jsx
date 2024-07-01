@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsExporting from "highcharts/modules/exporting";
-import DatePicker from "rsuite/DatePicker";
-import "rsuite/DatePicker/styles/index.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import useMontlyData from "../../hooks/useMontlyData";
 
@@ -103,18 +104,22 @@ const Monthly = () => {
 
   return (
     <div>
-      <div className="p-6">   {/* border-2 rounded-xl border-blue-200 */}
+      <div className="p-6">
+        {" "}
+        {/* border-2 rounded-xl border-blue-200 */}
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold text-gray-800">
             Monthly Consumption
           </h2>
-          <DatePicker
-            placement="auto"
-            oneTap
-            value={year}
-            format="yyyy"
-            onChange={handleYearChange}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label={'"year"'}
+              openTo="year"
+              views={['year']}
+              value={year}
+              onChange={handleYearChange}
+            />
+          </LocalizationProvider>
         </div>
         <div className="mt-10">
           {isLoading ? (

@@ -21,7 +21,19 @@ const Analysis = () => {
   
   // On changed event handler 
   const handleDateChange = (range) => {
-    setDate([range[0], range[1]] || [new Date(), new Date()]);
+    if (range) {
+      const [startDate, endDate] = range;
+      const timeDifference = endDate - startDate;
+      const dayDifference = timeDifference / (1000 * 3600 * 24); // Convert milliseconds to days
+
+      if (dayDifference <= 7) {
+        setDate(range);
+      } else {
+        alert("The maximum range limit is 7 days.");
+      }
+    } else {
+      setDate([new Date(), new Date()]); // Set to default values or handle as needed
+    }
   };
 
   // Convert data to the format required by Highcharts
@@ -93,7 +105,7 @@ const Analysis = () => {
             format="yyyy-MM-dd"
             onChange={handleDateChange}
             character="   To   "
-            // calendar={1}
+            cleanable={false} // Hide the cross button
           />
         </div>
         <div className="mt-10">

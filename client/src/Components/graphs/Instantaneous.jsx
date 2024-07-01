@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsExporting from "highcharts/modules/exporting";
-import DatePicker from "rsuite/DatePicker";
-import "rsuite/DatePicker/styles/index.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import TextField from "@mui/material/TextField";
 import useFetchInstantaneousData from "../../hooks/useFetchInstantaneousData ";
 
 // Initialize Highcharts exporting module
@@ -13,7 +15,7 @@ const Instantaneous = () => {
   const [date, setDate] = useState(new Date());
   const chartData = useFetchInstantaneousData([date, date]);
 
-  // On changed event handler 
+  // On changed event handler
   const handleDateChange = (date) => {
     setDate(date || new Date());
   };
@@ -21,7 +23,7 @@ const Instantaneous = () => {
   // Convert data to the format required by Highcharts
   const data = chartData?.chart_data?.map((item) => {
     const date = new Date(item.Device_time);
-    const istTime = date.getTime() + 5.5 * 60 * 60 * 1000;        // Adjust to IST (UTC+5:30)
+    const istTime = date.getTime() + 5.5 * 60 * 60 * 1000; // Adjust to IST (UTC+5:30)
     return [istTime, parseFloat(item.instant_flow)];
   });
 
@@ -30,11 +32,11 @@ const Instantaneous = () => {
       type: "spline",
       zoomType: "x",
     },
-    title : "",
+    title: "",
     xAxis: {
-      type: "datetime",            // Use a datetime axis
+      type: "datetime", // Use a datetime axis
       dateTimeLabelFormats: {
-        hour: "%H:%M",             // Format for hours and minutes
+        hour: "%H:%M", // Format for hours and minutes
         minute: "%H:%M",
       },
       title: {
@@ -42,7 +44,7 @@ const Instantaneous = () => {
       },
     },
     yAxis: {
-      min : 0,
+      min: 0,
       title: {
         text: "Instantaneous Flow (kL)",
       },
@@ -74,20 +76,24 @@ const Instantaneous = () => {
   };
 
   // Check if chartData exists and has chart_data
-  const isLoading = !chartData || !chartData.chart_data || chartData.chart_data.length === 0;
+  const isLoading =
+    !chartData || !chartData.chart_data || chartData.chart_data.length === 0;
 
   return (
     <div>
-      <div className="p-6 ">   {/* border-2 rounded-xl border-blue-200 */}
+      <div className="p-6 ">
+        {" "}
+        {/* border-2 rounded-xl border-blue-200 */}
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold text-gray-800">Instantaneous</h2>
-          <DatePicker
-            placement="auto"
-            oneTap
-            value={date}
-            format="yyyy-MM-dd"
-            onChange={handleDateChange}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="day"
+              format="yyyy-MM-dd"
+              value={date}
+              onChange={handleDateChange}
+            />
+          </LocalizationProvider>
         </div>
         <div className="mt-10">
           {isLoading ? (
