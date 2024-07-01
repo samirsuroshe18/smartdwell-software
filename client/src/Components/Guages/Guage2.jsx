@@ -6,14 +6,46 @@ function Gauge2() {
   const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    // Simulate fetching data with a delay
-    const fetchData = setTimeout(() => {
-      setValvePosition(55); // Set valve position after data fetch
-      setLoading(false); // Set loading to false after data fetch
-    }, 2000); // Simulated 2 second delay
+    const fetchData = async () => {
+      try {
+        // Get userBuilding from local storage and parse it as an integer
+        const userBuilding = JSON.parse(localStorage.getItem('userBuilding')); // Default to 337 if not found
+        console.log('Retrieved userBuilding:', userBuilding); // Debugging log
 
-    return () => clearTimeout(fetchData); // Clean up on component unmount
-  }, []);
+        // Replace with your actual API endpoint and token
+        const apiUrl = `https://api.nbsense.in/water_controller/latest_data?meter_id=${userBuilding}`;
+        const token = 'Bearer 475e703f-dc25-4e07-9eb7-db86cd19e6c0';
+        console.log('Constructed API URL:', apiUrl); // Debugging log
+
+        const response = await fetch(apiUrl, {
+          headers: {
+            Authorization: token
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response.json();
+        console.log('Fetched data:', data); // Debugging log
+
+        // Set valve position from API response
+        setValvePosition(data.controller_current_position);
+        setLoading(false); // Set loading to false after data is fetched
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false); // Set loading to false if there's an error
+      }
+    };
+
+    fetchData();
+
+    // Clean up function to clear timeout or cancel async operations if component unmounts
+    return () => {
+      // Cleanup code if necessary
+    };
+  }, []); // Empty dependency array ensures useEffect runs only once on mount
 
   return (
     <div className='container'>
@@ -60,14 +92,20 @@ function Gauge2() {
             color: loading ? 'gray' : '#053B50', // Change color during loading
             fontWeight: 'bold',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            justifyContent: 'center', // Center content horizontally
+            width: '100%', // Ensure it spans the width of the container
+            whiteSpace: 'nowrap' // Prevent text wrapping
           }}
         >
-          {/* <span>Position: </span> */}
-          {loading ? <span className="loading">Loading...</span> : <span>Position:{valvePosition}%</span>}
+          {loading ? (
+            <span className="loading">Loading...</span>
+          ) : (
+            <span>Position: {valvePosition}%</span>
+          )}
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 
