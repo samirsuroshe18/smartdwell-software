@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import useMeterId from "../contexts/meterId";
 
-function useAnalysisData(start_time, end_time){
+
+function useMeterListData(){
     const [data, setData] = useState([]);
-    const {meter} = useMeterId();
     useEffect(()=>{
-        fetch(`https://api.nbsense.in/water_ms/analytics/line?meter_id=${meter}&start_time=${start_time}&end_time=${end_time}`
+        fetch(`https://api.nbsense.in/water_ms/water_list_data`
             , {
                 method: 'GET', // or 'POST' if you are posting data
                 headers: {
@@ -14,11 +13,11 @@ function useAnalysisData(start_time, end_time){
                 }
               }
         ).then((response)=>response.json())
-        .then((response)=> setData(response.chart_data))
-    }, [start_time, end_time])
+        .then((response)=> setData(response))
+    }, [])
 
-    console.log("Analysis : ",data);
+    console.log("MeterList Data : ",data);
     return data;
 }
 
-export default useAnalysisData;
+export default useMeterListData;

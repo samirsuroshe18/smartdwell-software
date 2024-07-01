@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import useMeterId from "../contexts/meterId";
 
 function useMontlyData(year=2024){
     const [data, setData] = useState([]);
+    const {meter} = useMeterId();
+    console.log("checking meter id : ", meter);
     useEffect(()=>{
-        fetch(`https://api.nbsense.in/water_ms/bar/${year}?meter_id=337`
+        fetch(`https://api.nbsense.in/water_ms/bar/${year}?meter_id=${meter}`
             , {
                 method: 'GET', // or 'POST' if you are posting data
                 headers: {

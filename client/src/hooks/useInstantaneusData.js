@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
+import useMeterId from "../contexts/meterId";
 
 const useInstantaneusData = (start_time, end_time) => {
   const [data, setData] = useState(null);
+  const {meter} = useMeterId()
 
   useEffect(() => {
     const fetchData = async () => {
       // Replace with your actual data fetching logic
-      const response = await fetch(`https://api.nbsense.in/water_ms/analytics/line?meter_id=337&start_time=${start_time}&end_time=${end_time}`,
+      const response = await fetch(`https://api.nbsense.in/water_ms/analytics/line?meter_id=${meter}&start_time=${start_time}&end_time=${end_time}`,
         {
           method: 'GET', // or 'POST' if you are posting data
           headers: {

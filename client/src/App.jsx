@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
@@ -14,12 +14,16 @@ import SignUp from "./Components/signup_component/signup_component";
 import UserDetails from "./Components/userDetails/userDetails";
 import Analysis from './Components/graphs/Analysis';
 import Overview from './pages/Overview/Overview';
+import { MeterIdProvider } from './contexts/meterId';
 
 const App = () => {
   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
+  const [meter, setMeter] = useState(0);
+
   return (
-    <Router>
+    <MeterIdProvider value={{meter, setMeter}}>
+      <Router>
       
       <main>
         <Routes>
@@ -48,6 +52,7 @@ const App = () => {
         </Routes>
       </main>
     </Router>
+    </MeterIdProvider>
   );
 }
 
