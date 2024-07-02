@@ -13,7 +13,7 @@ export default function Login() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch("http://localhost:8000/login-user", {
+    fetch("http://207.246.91.223:8001/login-user", {
       method: "POST",
       crossDomain: true,
       headers: {

@@ -20,7 +20,7 @@
 
     const fetchBuildingsData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/getBuildings");
+        const response = await axios.get("http://207.246.91.223:8001/getBuildings");
         setBuildingsList(response.data.data);
       } catch (error) {
         console.error(error);
@@ -35,7 +35,7 @@
         e.preventDefault();
 
         // console.log(fname, lname, email, password);
-        fetch("http://localhost:8000/register", {
+        fetch("http://207.246.91.223:8001/register", {
           method: "POST",
           crossDomain: true,
           headers: {

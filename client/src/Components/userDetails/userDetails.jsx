@@ -8,7 +8,7 @@ export default function UserDetails() {
   const [userType, setUserType] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/userData", {
+    fetch("http://207.246.91.223:8001/userData", {
       method: "POST",
       crossDomain: true,
       headers: {

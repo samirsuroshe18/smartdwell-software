@@ -15,7 +15,7 @@ export default function UserInfo() { // Renamed to start with an uppercase lette
   }, [searchQuery]);
 
   const getAllUser = () => {
-    fetch(`http://localhost:8000/getAllUser?search=${searchQuery}`, {
+    fetch(`http://207.246.91.223:8001/getAllUser?search=${searchQuery}`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -31,7 +31,7 @@ export default function UserInfo() { // Renamed to start with an uppercase lette
 
   const deleteUser = (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}`)) {
-      fetch("http://localhost:8000/deleteUser", {
+      fetch("http://207.246.91.223:8001/deleteUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

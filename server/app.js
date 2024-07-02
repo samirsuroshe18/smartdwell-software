@@ -1,40 +1,25 @@
-const express = require("express"); // Import express first
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const cors = require('cors');
+const dotenv = require("dotenv")
+dotenv.config()
+require("./userDetails");
 const app = express();
 
-const cors = require('cors'); // Import the cors middleware
-
-// Middleware to enable CORS
+// Middlewares
 app.use(cors());
-// Middleware to parse JSON requests
 app.use(express.json());
-
-// Use the apiRouter for API routes
-
-const mongoose = require("mongoose");
 app.use(express.json());
-const bcrypt = require("bcryptjs");
-app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
+app.set("view engine", "ejs");
 
-const jwt = require("jsonwebtoken");
-
-
-const JWT_SECRET = "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
-
-const mongoUrl = "mongodb+srv://sawantasha51:uro76zIVSOX2re7N@cluster0.e9nhtwa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-  
-
-mongoose
-  .connect(mongoUrl, {
-  //  useNewUrlParser: true,
-  })
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to database");
   })
   .catch((e) => console.log(e));
-
-require("./userDetails");
-
 
 const User = mongoose.model("UserInfo");
 
@@ -74,7 +59,7 @@ app.post("/login-user", async (req, res) => {
     return res.json({ error: "User Not found" });
   }
   if (await bcrypt.compare(password, user.password)) {
-    const token = jwt.sign({ email: user.email, building: user.building }, JWT_SECRET, {
+    const token = jwt.sign({ email: user.email, building: user.building }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
@@ -86,43 +71,11 @@ app.post("/login-user", async (req, res) => {
   }
   res.json({ status: "error", error: "Invalid Password" });
 });
-app.use(cors());
-
-app.get('/api/:loc', async (req, res) => {
-  try {
-    const { loc } = req.params;
-    const token = '475e703f-dc25-4e07-9eb7-db86cd19e6c0'; // Authorization token
-    const apiUrl = `https://api.nbsense.in/water_ms/get_latest_data?meter_id=${loc}`;
-    
-    const response = await fetch(apiUrl, {
-      headers: {
-        Authorization: `Bearer ${token}` // Include authorization token in headers
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch data. Status: ' + response.status);
-    }
-
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error('Response is not JSON');
-    }
-
-    const responseData = await response.json(); // Parse response as JSON
-    console.log('Response:', responseData); // Log the parsed JSON data
-
-    res.json(responseData); // Send the parsed JSON data as response
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
 
 app.post("/userData", async (req, res) => {
   const { token } = req.body;
   try {
-    const user = jwt.verify(token, JWT_SECRET, (err, res) => {
+    const user = jwt.verify(token, process.env.JWT_SECRET, (err, res) => {
       if (err) {
         return "token expired";
       }
@@ -144,7 +97,6 @@ app.post("/userData", async (req, res) => {
       });
   } catch (error) {}
 });
-
 
 app.get("/getAllUser", async (req, res) => {
   let query = {};
@@ -177,8 +129,6 @@ app.post("/deleteUser", async (req, res) => {
     res.status(500).send({ error: "Internal Server Error" });
   }
 });
-
-
 
 app.get("/paginatedUsers", async (req, res) => {
   const allUser = await User.find({});
@@ -215,7 +165,6 @@ const bldgDataSchema = new mongoose.Schema({
 });
 const BldgData = mongoose.model("BldgData", bldgDataSchema);
 
-// API endpoint to add data to bldgdata collection
 app.post("/addBuilding", async (req, res) => {
   const { locname, bldgname } = req.body;
 
@@ -228,6 +177,7 @@ app.post("/addBuilding", async (req, res) => {
     res.send({ status: "error" });
   }
 });
+
 app.get("/getBuildings", async (req, res) => {
   try {
     const buildings = await BldgData.find();
@@ -250,6 +200,6 @@ app.delete("/deleteBuilding/:id", async (req, res) => {
 });
 
 
-app.listen(8000, () => {
-  console.log("Server Started");
+app.listen(process.env.PORT, process.env.SERVER_HOST, () => {
+  console.log(`Server is listening : http://${process.env.SERVER_HOST}:${process.env.PORT}`);
 });

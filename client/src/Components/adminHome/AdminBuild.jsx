@@ -9,7 +9,7 @@ const AdminBuild = () => {
 
   const addBuilding = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/addBuilding", {
+      const response = await axios.post("http://207.246.91.223:8001/addBuilding", {
         locname,
         bldgname,
       });
@@ -23,7 +23,7 @@ const AdminBuild = () => {
 
   const deleteBuilding = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/deleteBuilding/${id}`);
+      const response = await axios.delete(`http://207.246.91.223:8001/deleteBuilding/${id}`);
       setMessage(response?.data.status === "ok" ? "Building deleted successfully" : "Error deleting building");
       fetchBuildings(); // Fetch buildings again after deletion to update the list
     } catch (error) {
@@ -34,7 +34,7 @@ const AdminBuild = () => {
 
   const fetchBuildings = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/getBuildings");
+      const response = await axios.get("http://207.246.91.223:8001/getBuildings");
       setBuildings(response?.data.data);
     } catch (error) {
       console.error(error);
