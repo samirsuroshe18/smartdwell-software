@@ -1,6 +1,7 @@
 import React from 'react'
 import SignUp from '../signup_component/signup_component';
 import AdminBuild from './AdminBuild';
+import UpdateConfig from '../controllling/Updateconfig';
 
 function superadmin() {
     const logOut = () => {
@@ -13,6 +14,9 @@ function superadmin() {
     <div>
         <SignUp/>
     </div>
+    <div>
+      <UpdateConfig/>
+    </div><br></br><br></br>
     <div>
       <AdminBuild/>
     </div>

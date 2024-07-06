@@ -38,12 +38,16 @@ const UpdateConfig = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        <h1>controlling</h1>
+      </div>
+      <div>
         <label htmlFor="meterId">Meter ID:</label>
         <input
           type="text"
           id="meterId"
           value={meterId}
           onChange={(e) => setMeterId(e.target.value)}
+          placeholder="Enter meter id"
           required
         />
       </div>
@@ -54,6 +58,7 @@ const UpdateConfig = () => {
           id="setValve"
           value={setValve}
           onChange={(e) => setSetValve(e.target.value)}
+            placeholder="Enter valve level to be set"
           required
         />
       </div>
